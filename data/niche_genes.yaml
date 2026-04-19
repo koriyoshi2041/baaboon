@@ -1,0 +1,99 @@
+# Organ-specific developmental master genes whose knockout in the sheep host
+# embryo creates a developmental niche that primate iPSCs can complement.
+#
+# Each organ lists the canonical gene(s) whose homozygous disruption has been
+# shown (or proposed with strong evidence) to ablate organogenesis. References
+# are given inline for auditability.
+#
+# Ortholog IDs: Ensembl gene stable IDs for Ovis aries (ARS-UI_Ramb_v2.0),
+# Papio anubis (Panubis1.0), and Homo sapiens (GRCh38). Where the authoritative
+# Ensembl stable ID is subject to change across releases, we deliberately leave
+# the value null and resolve at runtime via symbol lookup.
+
+version: "2026-04-20"
+schema_version: 1
+
+organs:
+  pancreas:
+    description: Endocrine and exocrine pancreas. Classical complementation target.
+    niche_genes:
+      - symbol: PDX1
+        role: Master transcription factor for pancreatic endoderm specification
+        sheep_ensembl_id: null
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000139515
+        null_phenotype: Apancreasia in Pdx1-/- mouse (Jonsson 1994); PDX1-/-
+          sheep fetus confirmed apancreasia (Vilarino et al. 2017, Sci Rep).
+        references:
+          - "Vilarino M et al. CRISPR/Cas9 microinjection in oocytes disables
+            pancreas development in sheep. Scientific Reports 7:17472 (2017)."
+          - "Jonsson J et al. Insulin-promoter-factor 1 is required for pancreas
+            development in mice. Nature 371:606-609 (1994)."
+
+  kidney:
+    description: Metanephric kidney. Active complementation target (2024-2025).
+    niche_genes:
+      - symbol: SALL1
+        role: Metanephric mesenchyme specification
+        sheep_ensembl_id: null
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000103449
+        null_phenotype: Kidney agenesis in Sall1-/- mouse; used as niche in
+          pig blastocyst complementation (Wang et al. 2023).
+        references:
+          - "Goto T et al. Generation of pluripotent stem cell-derived mouse
+            kidneys in Sall1-targeted anephric rats. Nat Commun (2019)."
+          - "Wang J et al. Generation of a humanized mesonephros in pig embryos.
+            Cell Stem Cell 30:1235-1245 (2023)."
+      - symbol: SIX1
+        role: Cooperates with SALL1; double KO yields stronger phenotype
+        sheep_ensembl_id: null
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000126778
+        null_phenotype: SIX1/SALL1-dKO pig gave humanized mesonephros
+          (Wang et al. 2023).
+        references:
+          - "Wang J et al. Cell Stem Cell 30:1235-1245 (2023)."
+
+  thymus:
+    description: T-cell maturation organ; promising for tolerance induction.
+    niche_genes:
+      - symbol: FOXN1
+        role: Thymic epithelial cell specification
+        sheep_ensembl_id: null
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000109101
+        null_phenotype: Nude phenotype (athymia) in Foxn1-/- mouse and rat.
+        references:
+          - "Nehls M et al. New member of the winged-helix protein family
+            disrupted in mouse and rat nude mutations. Nature 372:103 (1994)."
+
+  heart:
+    description: Cardiac muscle and conduction system. Niche is debated; single
+      gene knockouts rarely produce clean niche vacancy.
+    niche_genes:
+      - symbol: NKX2-5
+        role: Cardiac transcription factor; partial niche
+        sheep_ensembl_id: null
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000183072
+        null_phenotype: Cardiac looping defect, embryonic lethal E10.5 in
+          Nkx2-5-/- mouse.
+        references:
+          - "Lyons I et al. Myogenic and morphogenetic defects in the heart
+            tubes of murine embryos lacking the homeobox gene Nkx2-5.
+            Genes Dev 9:1654 (1995)."
+
+  liver:
+    description: Hepatocyte niche; complementation shown in rodents.
+    niche_genes:
+      - symbol: HHEX
+        role: Hepatic progenitor specification
+        sheep_ensembl_id: null
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000152804
+        null_phenotype: Failure of liver bud formation in Hhex-/- mouse.
+        references:
+          - "Martinez Barbera JP et al. The homeobox gene Hex is required in
+            definitive endodermal tissues for normal forebrain, liver and
+            thyroid formation. Development 127:2433 (2000)."

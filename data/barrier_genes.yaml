@@ -1,0 +1,87 @@
+# Genes implicated as interspecies chimerism barriers. Editing these in the
+# donor primate iPSC line can raise chimeric contribution in the ungulate host
+# embryo.
+#
+# Two mechanistic classes are currently recognised in the 2021-2025 literature:
+#   1. Cell competition / apoptosis imbalance — "loser" cells are cleared by
+#      neighbouring host cells via BCL2 downregulation and TP53/NF-kB pathway.
+#   2. Cell adhesion incompatibility — donor PSCs fail to integrate with host
+#      epiblast because cadherins and other CAMs do not trans-interact.
+#
+# Intervention direction is KO (loss-of-function) unless marked OVEREXPRESS.
+
+version: "2026-04-20"
+schema_version: 1
+
+classes:
+  apoptosis_cell_competition:
+    mechanism: >-
+      Donor PSCs are eliminated by apoptosis in the presence of host PSCs.
+      Knockouts of TP53 or P65 in donor cells, or overexpression of BCL2,
+      reverse this elimination and increase chimeric contribution.
+    references:
+      - "Zheng C et al. Cell competition constitutes a barrier for interspecies
+        chimerism. Nature 592:272-276 (2021)."
+      - "Masaki H et al. Breakthrough of interspecific chimerism: blocking
+        apoptosis. Cell Regen 10:20 (2021)."
+    genes:
+      - symbol: TP53
+        direction: KO
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000141510
+        effect_summary: Removes apoptotic checkpoint so donor cells survive
+          cell-competition pressure; tested in primate→rodent co-culture.
+      - symbol: BAK1
+        direction: KO
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000030110
+        effect_summary: Blocks intrinsic apoptosis executor.
+      - symbol: BAX
+        direction: KO
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000087088
+        effect_summary: Paired with BAK1 KO for stronger apoptosis blockade.
+      - symbol: MYD88
+        direction: KO
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000172936
+        effect_summary: NF-kB arm inhibitor; combined with TP53-KO in
+          naive-4CL hiPSCs yielded mouse-embryo chimerism (Lin et al. 2024).
+      - symbol: BCL2
+        direction: OVEREXPRESS
+        baboon_ensembl_id: null
+        human_ensembl_id: ENSG00000171791
+        effect_summary: Prevents mitochondrial apoptosis; transgenic
+          knock-in rather than CRISPR KO. Requires safe-harbor insertion.
+
+  cell_adhesion:
+    mechanism: >-
+      Donor primate PSCs do not adhere productively to host ungulate epiblast
+      because cadherin repertoires differ. 2024 work used nanobody-antigen
+      synthetic surface CAMs to rescue adhesion and increase chimerism.
+    references:
+      - "Lin K et al. Incompatibility in cell adhesion constitutes a barrier
+        to interspecies chimerism. Cell Stem Cell 31:1441-1454 (2024)."
+    genes:
+      - symbol: CDH1
+        direction: ASSESS
+        note: Natural cadherin mismatch; engineered bridges (nanobody-antigen
+          pair) are preferred to unrestricted KO because full CDH1 loss
+          destabilises the iPSC state.
+        human_ensembl_id: ENSG00000039068
+      - symbol: CDH2
+        direction: ASSESS
+        human_ensembl_id: ENSG00000170558
+        note: Same caveat as CDH1.
+      - symbol: EPCAM
+        direction: ASSESS
+        human_ensembl_id: ENSG00000119888
+        note: Epithelial cell-adhesion molecule; often co-expressed with
+          cadherins, flagged for compatibility screening only.
+
+pipeline_interaction:
+  # How competence.py should treat each direction
+  KO: "Design sgRNAs targeting early coding exons of donor (baboon) ortholog."
+  OVEREXPRESS: "Report as knock-in cassette requirement, skip sgRNA design."
+  ASSESS: "Report cross-species sequence identity of extracellular domain;
+    flag as candidate for synthetic bridge rather than direct edit."

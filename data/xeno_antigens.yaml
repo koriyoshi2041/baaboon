@@ -1,0 +1,133 @@
+# Stage 2: xeno-antigen loci on the residual sheep stromal/vascular cells of
+# the chimeric organ. Goal is the MINIMUM edit set for sheep-to-baboon
+# xenotransplant.
+#
+# The key comparative data point is the baboon's native expression of these
+# antigens. If an antigen is present natively in baboon serum/cells, the recipient
+# does not develop pre-formed antibodies against it and the corresponding KO in
+# the sheep donor becomes unnecessary. This is the computational basis for the
+# "minimum edit delta" that this project aims to produce against the standard
+# pig→baboon protocol.
+
+version: "2026-04-20"
+schema_version: 1
+
+glycan_antigens:
+  - symbol: GGTA1
+    full_name: alpha-1,3-galactosyltransferase
+    epitope: Galα1-3Galβ1-4GlcNAc-R (alpha-Gal)
+    baboon_native: false
+    # Old World monkeys including baboons lack functional GGTA1 and mount
+    # antibodies against alpha-Gal (Galili 1988). KO is REQUIRED in any
+    # non-primate donor for baboon recipient.
+    sheep_native: true
+    pig_native: true
+    sheep_to_baboon_edit: REQUIRED
+    pig_to_baboon_edit: REQUIRED
+    delta_note: No reduction vs pig protocol on this locus.
+    references:
+      - "Galili U et al. Interaction between human natural anti-alpha-
+        galactosyl immunoglobulin G and bacteria of the human flora.
+        Infect Immun 56:1730 (1988)."
+
+  - symbol: CMAH
+    full_name: cytidine monophosphate-N-acetylneuraminic acid hydroxylase
+    epitope: Neu5Gc (N-glycolylneuraminic acid)
+    baboon_native: true
+    # Baboon has intact CMAH and expresses Neu5Gc, so no preformed antibody
+    # challenge. Knocking CMAH out of the donor actually INCREASED baboon
+    # serum binding 3-fold in Estrada et al. 2015 — a reverse effect. This is
+    # the flagship differential edit for sheep→baboon vs pig→human.
+    sheep_native: true
+    pig_native: true
+    sheep_to_baboon_edit: NOT_REQUIRED
+    pig_to_baboon_edit: COUNTERPRODUCTIVE
+    delta_note: >-
+      Pig→human protocols demand CMAH KO because human lacks CMAH. Baboon
+      retains CMAH, and so does sheep. Sheep→baboon can KEEP CMAH intact,
+      removing one edit from the standard protocol.
+    references:
+      - "Estrada JL et al. Evaluation of human and non-human primate antibody
+        binding to pig cells lacking GGTA1/CMAH/β4GalNT2 genes.
+        Xenotransplantation 22:194 (2015)."
+
+  - symbol: B4GALNT2
+    full_name: beta-1,4-N-acetylgalactosaminyltransferase 2
+    epitope: Sda-like (GalNAc-β1-4[Neu5Ac-α2-3]Gal)
+    baboon_native: true
+    # Baboon expresses Sda weakly but present in some tissues. KO impact
+    # on baboon recipient is smaller than on human. Flagged RECOMMENDED
+    # because baboon IgM can still bind under inflammatory conditions.
+    sheep_native: partial
+    pig_native: true
+    sheep_to_baboon_edit: RECOMMENDED
+    pig_to_baboon_edit: REQUIRED
+    delta_note: >-
+      Reduced necessity vs pig protocol. Sheep sialyl-glycan repertoire
+      differs from pig; literature on sheep Sda expression is sparse and
+      the YAML flags this for wet-lab confirmation.
+    references:
+      - "Byrne GW et al. Increased immunosuppression, not anticoagulation,
+        extends cardiac xenograft survival. Transplantation 82:1787 (2006)."
+
+complement_regulators:
+  # These are knock-IN transgenes of PRIMATE / human regulators rather than
+  # KOs. For sheep→baboon, the PRIMATE (baboon) cDNA is the natural source.
+  - symbol: CD46
+    direction: KNOCK_IN
+    donor_cdna_source: Papio anubis CD46
+    human_ortholog: ENSG00000117335
+    sheep_to_baboon_edit: REQUIRED
+    delta_note: Use baboon cDNA rather than human cDNA (as used for pig→human).
+    role: Membrane cofactor protein; inactivates C3b/C4b.
+
+  - symbol: CD55
+    direction: KNOCK_IN
+    donor_cdna_source: Papio anubis CD55
+    human_ortholog: ENSG00000196352
+    sheep_to_baboon_edit: REQUIRED
+    role: Decay-accelerating factor; accelerates C3/C5 convertase decay.
+
+  - symbol: CD59
+    direction: KNOCK_IN
+    donor_cdna_source: Papio anubis CD59
+    human_ortholog: ENSG00000085063
+    sheep_to_baboon_edit: REQUIRED
+    role: Blocks membrane attack complex assembly.
+
+coagulation_thrombosis:
+  - symbol: THBD
+    common_name: thrombomodulin
+    direction: KNOCK_IN
+    donor_cdna_source: Papio anubis THBD
+    human_ortholog: ENSG00000178726
+    sheep_to_baboon_edit: RECOMMENDED
+    role: Corrects pig/sheep thrombomodulin-protein-C cross-species deficit.
+
+  - symbol: PROCR
+    common_name: endothelial protein C receptor (EPCR)
+    direction: KNOCK_IN
+    donor_cdna_source: Papio anubis PROCR
+    human_ortholog: ENSG00000101000
+    sheep_to_baboon_edit: RECOMMENDED
+
+porcine_endogenous_retrovirus:
+  # PERV inactivation is a pig-specific concern. Sheep endogenous retrovirus
+  # (enJSRV) is comparatively less studied as a xeno-risk but is flagged.
+  sheep_equivalent: enJSRV
+  sheep_to_baboon_edit: ASSESS
+  delta_note: >-
+    One of the largest single-source reductions from pig protocols: 59 PERV
+    loci require inactivation in the standard 10GE donor pig. Ovine enJSRV
+    copies are fewer and many are defective, dramatically reducing this
+    editing burden. Pipeline should quantify this per-genome.
+  references:
+    - "Niu D et al. Inactivation of porcine endogenous retrovirus in pigs
+      using CRISPR-Cas9. Science 357:1303 (2017)."
+    - "Arnaud F et al. A paradigm for virus-host coevolution: sequential
+      counter-adaptations between endogenous and exogenous retroviruses.
+      PLoS Pathog 3:e170 (2007)."
+
+# Summary table produced by the pipeline:
+# For every antigen, emit (organ, pig_edit, sheep_edit, delta). The aggregate
+# delta is the headline number for the sheep-donor hypothesis.

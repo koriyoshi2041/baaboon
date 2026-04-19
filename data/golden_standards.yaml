@@ -1,0 +1,149 @@
+# Tier 1 verification corpus: published sgRNA sequences that the pipeline
+# must be able to recover when run on the same locus. Each entry records the
+# paper, target gene, species, and the PROTOSPACER sequence as reported in
+# methods or supplementary materials.
+#
+# A protospacer is the 20 nt target on the genomic DNA immediately 5' of the
+# PAM. Sequences are reported in 5'→3' orientation on the strand targeted by
+# the sgRNA; the PAM (NGG for SpCas9 unless noted) is adjacent on the 3' side
+# and is NOT included in the protospacer field.
+#
+# For entries where we have not yet manually transcribed the sequence from
+# the paper supplement, the `protospacer` field is null and the entry is
+# marked `status: pending_curation`. Contributors can submit pull requests
+# adding sequences with citation confirming the exact supplemental figure or
+# table.
+
+version: "2026-04-20"
+schema_version: 1
+
+entries:
+  - id: vilarino_2017_pdx1_single
+    gene_symbol: PDX1
+    species: Ovis aries
+    cas: SpCas9
+    pam: GGG
+    protospacer: GGGCCCCGCTGGAACGCGCA
+    status: curated
+    paper:
+      title: "CRISPR/Cas9 microinjection in oocytes disables pancreas
+        development in sheep"
+      authors: "Vilarino M, Rashid ST, Suchy FP, et al."
+      journal: Scientific Reports
+      year: 2017
+      doi: "10.1038/s41598-017-17805-0"
+    notes: >-
+      Single-sgRNA strategy from Supplementary Table S2, oligo name
+      "oPDX1-single gRNA". Verified to map to sheep PDX1 on the
+      ARS-UI_Ramb_v2.0 assembly at chromosome 10, position 32402477
+      (forward strand), with genomic context
+      GCGCCGGGCCCCGCTGGAACGCGCAGGGGT — protospacer GGGCCCCGCTGGAACGCGCA
+      followed by PAM GGG.
+    verification_expectation: |
+      Top-20 of pipeline output for sheep PDX1 should contain this
+      protospacer. Pass metric: rank <= 20.
+
+  - id: vilarino_2017_pdx1_dual1
+    gene_symbol: PDX1
+    species: Ovis aries
+    cas: SpCas9
+    pam: NGG
+    protospacer: GCGTACGGGGAGATGTCCGG
+    status: curated_with_reference_snp
+    paper:
+      title: "CRISPR/Cas9 microinjection in oocytes disables pancreas
+        development in sheep"
+      authors: "Vilarino M et al."
+      journal: Scientific Reports
+      year: 2017
+      doi: "10.1038/s41598-017-17805-0"
+    notes: >-
+      One of the two sgRNAs of the dual-sgRNA strategy that produced the
+      PDX1-/- fetus. Taken from Supplementary Table S2 oligo
+      "oPDX1- dual gRNA1". The paper's sequence has C at position 6 whereas
+      the current ARS-UI_Ramb_v2.0 sheep reference carries T at that
+      position (context observed around genomic chrom 10 pos 32402342:
+      GCGTATGGGGAGATGTCCGG, a single-nucleotide difference from the paper).
+      This is a genuine breed/reference polymorphism, not a design error;
+      the dual-gRNA approach still ablated PDX1 in the paper's sheep.
+    verification_expectation: |
+      Expected NOT to be recovered as an exact match against the current
+      Rambouillet reference; tolerated via `allow_snp_miss: true`.
+    allow_snp_miss: true
+
+  - id: vilarino_2017_pdx1_dual2
+    gene_symbol: PDX1
+    species: Ovis aries
+    cas: SpCas9
+    pam: NGG
+    protospacer: GCACGCGTGGAAAGGCCAGT
+    status: curated_with_reference_snp
+    paper:
+      title: "CRISPR/Cas9 microinjection in oocytes disables pancreas
+        development in sheep"
+      authors: "Vilarino M et al."
+      journal: Scientific Reports
+      year: 2017
+      doi: "10.1038/s41598-017-17805-0"
+    notes: >-
+      Second sgRNA of the dual-sgRNA pair (oPDX1- dual gRNA2 in
+      Supplementary Table S2). A 16-mer substring matches the Rambouillet
+      reference on the reverse strand near genomic chrom 10 pos 32402142
+      but the 3' four bases diverge — the paper's sheep differs from
+      Rambouillet at multiple positions in this stretch. Flagged with
+      allow_snp_miss so the pipeline does not hard-fail verification.
+    allow_snp_miss: true
+
+  - id: crispo_2015_mstn_sheep
+    gene_symbol: MSTN
+    species: Ovis aries
+    cas: SpCas9
+    pam: TGG
+    protospacer: GGCTGTGTAATGCATGCTTG
+    status: curated
+    paper:
+      title: "Efficient generation of myostatin knock-out sheep using
+        CRISPR/Cas9 technology and microinjection into zygotes"
+      authors: "Crispo M, Mulet AP, Tesson L, et al."
+      journal: PLOS ONE
+      year: 2015
+      doi: "10.1371/journal.pone.0136690"
+    notes: >-
+      The paper encodes the sgRNA via the cloning oligo
+      5'-CACCGGCTGTGTAATGCATGCTTG-3'. The first 4 nt (CACC) are the BbsI
+      overhang for pX330 cloning (Cong 2013 Nat Protoc); the remaining
+      20 nt GGCTGTGTAATGCATGCTTG are the genomic protospacer, adjacent
+      to PAM TGG (ovine MSTN exon 1, nt 110–130 in the paper's numbering).
+    verification_expectation: |
+      When sheep MSTN is fetched via Ensembl and scanned for SpCas9 guides
+      (guide_length=20, PAM NGG), this 20 nt protospacer should appear
+      with Hamming distance 0 in the top-20 of the scored output on the
+      sense strand of MSTN exon 1.
+
+  - id: niu_2017_perv_pig_multiplex
+    gene_symbol: PERV-pol
+    species: Sus scrofa
+    cas: SpCas9
+    pam: NGG
+    protospacer: null
+    status: pending_curation
+    paper:
+      title: "Inactivation of porcine endogenous retrovirus in pigs using
+        CRISPR-Cas9"
+      authors: "Niu D, Wei HJ, Lin L, et al."
+      journal: Science
+      year: 2017
+      doi: "10.1126/science.aan4187"
+    notes: >-
+      Single multiplexed sgRNA targeting conserved pol sequence of all 59
+      PERV copies. Included here as cross-species negative control — when
+      run on sheep genome, should NOT return high-scoring hits matching pig
+      pol (by design, these viruses differ between species).
+
+# Directive for the verification harness:
+# - Test `tests/test_vilarino_pdx1.py` iterates over entries where
+#   species == "Ovis aries" and gene_symbol == "PDX1" and protospacer != null.
+# - For each, assert that the pipeline's top-10 sgRNAs for PDX1 in sheep
+#   contain a protospacer with Hamming distance 0 to the reference.
+# - If all entries are still status: pending_curation, test is skipped with
+#   xfail-like message so CI does not break but the gap is visible.
