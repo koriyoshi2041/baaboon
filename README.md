@@ -1,26 +1,87 @@
-# baboonedit — Papio × Ovis CRISPR Design Pipeline
+<p align="center">
+  <img src="assets/banner.svg" alt="baaboon — Papio × Ovis CRISPR design" width="780"/>
+</p>
 
-A two-stage, open-source CRISPR design pipeline that fuses **baboon** (*Papio anubis*)
-and **sheep** (*Ovis aries*) biology at the genome level, pursuing one concrete scientific
-question:
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1f2933" alt="MIT License"/></a>
+  <img src="https://img.shields.io/badge/python-3.11%2B-0072B2" alt="Python 3.11+"/>
+  <img src="https://img.shields.io/badge/tests-45%20passing-009E73" alt="45 tests passing"/>
+  <img src="https://img.shields.io/badge/ensembl-release%20115-E69F00" alt="Ensembl release 115"/>
+  <img src="https://img.shields.io/badge/sgRNAs%20reproduced-Crispo%202015%20%7C%20Vilarino%202017-D55E00" alt="Published sgRNAs reproduced"/>
+  <img src="https://img.shields.io/badge/CMAH%20%CE%94-1%20edit%20dropped-CC79A7" alt="CMAH delta"/>
+</p>
 
-> **If we wanted to grow a baboon-derived organ inside a sheep embryo, then transplant
-> that organ back into a baboon recipient — what is the minimal CRISPR edit program at
-> each stage?**
+<p align="center"><em>
+  “Do baboons dream of electric sheep?”<br/>
+  <sub>— not quite Philip K. Dick, but nearly</sub>
+</em></p>
 
-This is not a parallel comparison of the two species. The deliverable is a single
-engineered organism (a sheep carrying a baboon organ) and a single engineered recipient
-pairing (sheep-stroma organ → baboon body). Both species are present simultaneously in
-every output.
+---
+
+## What is this
+
+**`baaboon`** is a two-stage, open-source CRISPR design pipeline that fuses
+a **baboon** (*Papio anubis*) and a **sheep** (*Ovis aries*) at the genome
+level, and then sends the result home.
+
+In one question:
+
+> *If we wanted to grow a baboon-derived organ inside a sheep embryo,
+> and then transplant that organ back into a baboon recipient —
+> what is the minimum CRISPR edit program at each stage?*
+
+This is not a side-by-side comparison. The deliverable is **one** engineered
+organism (a sheep carrying a baboon organ) and **one** engineered graft
+(sheep-stroma organ going back into a baboon). Both species are present
+simultaneously in every output. The tool computes the molecular bill of
+materials.
+
+<p align="center">
+  <img src="assets/sheep.svg" alt="sheep (host)" width="220"/>
+  <img src="assets/baboon.svg" alt="baboon (donor)" width="220"/>
+</p>
+
+---
+
+## TL;DR
+
+> *“Your scientists were so preoccupied with whether or not they could,
+> they didn't stop to think if they should.”* — Ian Malcolm, *Jurassic Park*
+
+We built the "could" part. **The `should` is yours.**
+
+- 🧬 **Input**: an organ name (pancreas, kidney, thymus, liver, heart).
+- 🐑 **Stage 1**: CRISPR edits on a sheep zygote to vacate the organ niche,
+  plus edits on baboon iPSCs to cross the primate–ungulate chimera barrier.
+- 🐒 **Stage 2**: CRISPR edits on sheep stromal cells so the resulting organ
+  passes back into a baboon without hyperacute rejection.
+- 📐 **Output**: ranked sgRNAs with real Ensembl coordinates, a markdown
+  report, and — if you ask nicely — three publication-quality figures.
+- ✅ **Verified** against two published sgRNA experiments (Crispo 2015 MSTN,
+  Vilarino 2017 PDX1) that the pipeline reproduces on demand.
+
+---
+
+## The Ship of Theseus, but with wool
+
+The project's backbone is a very old thought experiment: if every plank of
+a ship is replaced, plank by plank, is it still the same ship? Blastocyst
+complementation is the biological version. Knock out the sheep gene that
+specifies "where the pancreas goes." Inject baboon stem cells. The sheep
+grows up. The pancreas inside it — every acinar cell, every beta cell — is
+**baboon**. The blood vessels feeding that pancreas? Those remain sheep.
+
+That chimeric organ is the unit of interest. `baaboon` plans the edits
+needed to build it, and the follow-up edits needed to transplant it.
 
 ---
 
 ## Two-stage narrative
 
 ```
-  Stage 1 (α): organogenesis in the host embryo
+  Stage 1a — organogenesis in the host embryo
   ──────────────────────────────────────────────
-  [Sheep zygote] ──(CRISPR KO niche gene e.g. PDX1)──▶ organ-less embryo
+  [Sheep zygote] ──(CRISPR KO niche gene, e.g. PDX1)──▶ organ-less embryo
                                 ▼
   [Baboon iPSCs] ──(CRISPR edits against chimerism barriers)──▶
      competent donor PSCs                                    │
@@ -31,7 +92,10 @@ every output.
                             Baboon-derived organ growing inside sheep
                             (parenchyma: baboon; stroma/vasculature: sheep)
 
-  Stage 2 (β): xenograft-back-to-baboon
+                               ⚡ “It's alive! IT'S ALIVE!” ⚡
+                                   — Dr. Frankenstein, 1931
+
+  Stage 2 — xenograft-back-to-baboon
   ─────────────────────────────────────
   Chimeric organ harvested ──▶ residual sheep cells define xeno antigens
                                            ▼
@@ -40,168 +104,111 @@ every output.
                     Implant into baboon recipient — compatible
 ```
 
-## Why this pairing, specifically
+---
 
-The literature through 2025 documents a mature pig-to-primate xenotransplant program
-(FDA-cleared clinical trials, 225-day NHP heart survival, 10-gene-edited donor pigs).
-The blastocyst-complementation field meanwhile has proven principle in
-pig→human-iPSC chimeras and has a published sheep PDX1 knockout
-(Vilarino et al., 2017). But one niche is unexplored in the public literature:
+## Why sheep, specifically?
 
-- **Baboons retain a functional CMAH gene.** Pig donors for baboon recipients gain
-  *worse* antibody binding when CMAH is knocked out (Estrada et al., 2015).
-- **Sheep also retain CMAH.** Therefore a sheep→baboon pathway could skip
-  an edit that is obligate for pig→human — a reduction in edit complexity that
-  this project aims to compute explicitly.
+The pig-to-primate xenotransplant program is mature and clinical
+(FDA-cleared 2025 kidney trials, 225-day NHP cardiac survival with 10-gene
+donors). But there is one loophole in the literature:
 
-The chimera side (baboon iPSCs in sheep) exploits a symmetric advantage: baboon and
-sheep together span the primate-ungulate barrier well studied in 2024-2025 papers on
-apoptosis and cell-adhesion incompatibilities.
+- **Baboons retain a functional CMAH gene.** Pig donors to baboon recipients
+  get *worse* antibody binding when CMAH is knocked out (Estrada et al.
+  2015 — a 3× increase).
+- **Sheep also retain CMAH.** So a sheep→baboon pathway can skip an edit
+  that is obligate for pig→human. That reduction is not rhetorical — the
+  pipeline computes it as a hard assertion that CI will fail on if broken.
 
-## What the project produces
+The pairing is motivated. It is not a stunt.
 
-Given a target organ (pancreas, kidney, thymus, ...), the pipeline emits:
+---
 
-- **Stage 1 outputs**
-  - Ranked CRISPR sgRNAs against organ-specific niche genes in the sheep genome
-  - Ranked CRISPR edits on baboon iPSCs targeting chimera-barrier loci
-    (TP53, BCL2, CDH1, MYD88, …)
-- **Stage 2 outputs**
-  - Ranked CRISPR sgRNAs on sheep xeno-antigen loci (GGTA1, B4GALNT2, …)
-  - An explicit *delta table* vs the published pig-to-baboon protocol, listing edits
-    made redundant by the sheep-baboon pairing
-- **Verification artefacts**
-  - Tier 1: recapitulation of published sgRNAs (Vilarino PDX1, Crispo MSTN, eGenesis
-    GGTA1) — measured as rank of the literature guide in the pipeline output
-  - Tier 2: cross-tool consistency vs CRISPOR / CHOPCHOP
-  - Tier 3: biological sanity checks (phylogenetic identity ordering, TP53-KO
-    chimerism score uplift, CMAH demotion in sheep→baboon plan)
-
-## Data sources
-
-All public, all programmatically accessible. No authentication required.
-
-| Source | Role |
-| --- | --- |
-| Ensembl REST (release 115, Sep 2025) | *Papio anubis* Panubis1.0 and *Ovis aries* ARS-UI_Ramb_v2.0 genomes, annotations, orthologs |
-| NCBI Datasets API | RefSeq protein and transcript sequences |
-| UniProt | functional domains for xeno antigens and complement regulators |
-| IMGT | MHC and Ig alleles for both species |
-| CRISPOR (local CLI) | optional off-target scoring backend |
-
-## Layout
-
-```
-baboonedit/
-├── papovis/              # Python package
-│   ├── ensembl.py        # REST client (retry + cache)
-│   ├── ortholog.py       # cross-species ortholog resolution
-│   ├── grna.py           # PAM scan + on-target scoring
-│   ├── niche.py          # Stage 1: niche-vacancy design
-│   ├── competence.py     # Stage 1: chimera-barrier iPSC edits
-│   ├── xeno.py           # Stage 2: minimum xeno-antigen edit set
-│   ├── report.py         # markdown/HTML report builder
-│   └── golden.py         # literature sgRNA comparator
-├── data/
-│   ├── niche_genes.yaml
-│   ├── barrier_genes.yaml
-│   ├── xeno_antigens.yaml
-│   └── golden_standards.yaml
-├── tests/                # pytest; Tier 1/2/3 verification
-├── notebooks/            # end-to-end demos, one per organ
-└── docs/                 # design docs, biology primer, references
-```
-
-## Headline figures (regenerated from live Ensembl output)
+## Headline figures
 
 All three figures below are produced by `python scripts/generate_figures.py`
-from cached Ensembl REST responses. No static data was pre-bundled; re-running
-the script on an empty cache populates it from `rest.ensembl.org` and emits
-identical PDFs + 300-dpi PNGs.
+from cached Ensembl REST responses. No static data was bundled; a cold
+cache populates itself from `rest.ensembl.org` and emits identical PDFs
++ 300-dpi PNGs.
 
 ### Figure 1 — the central thesis: sheep donors need fewer edits
 
 ![Figure 1 — Stage 2 edit burden](figures/fig1_edit_delta.png)
 
-**Panel A.** Per-antigen edit necessity for a baboon recipient, comparing the
-sheep-donor axis (this project) against the established pig-donor axis
-(eGenesis / United Therapeutics / Revivicor protocols). **Panel B.** The
-headline finding: **the sheep axis drops one strictly-required edit (CMAH)
-and demotes two pig-required edits to *recommended*** (B4GALNT2, PROCR), for
-an aggregate reduction from 7 required edits on the pig axis to 4 on the
-sheep axis. The CMAH result follows directly from Estrada et al. 2015
-*Xenotransplantation* 22:194, in which CMAH knockout in pig donors
-*increased* baboon serum binding 3-fold — baboons themselves are CMAH-
-competent, as are sheep, so the knockout is unnecessary on the sheep axis
-and actively counter-productive on the pig axis.
+**Panel A.** Per-antigen edit necessity for a baboon recipient, comparing
+the sheep-donor axis (this project) against the established pig-donor axis
+(eGenesis / United Therapeutics / Revivicor). **Panel B.** The headline:
+the sheep axis drops one strictly-required edit (CMAH) and demotes two
+pig-required edits to *recommended* (B4GALNT2, PROCR), aggregating from
+**7 required edits on the pig axis to 4 on the sheep axis**.
+
+> *“The past can hurt. But from the way I see it, you can either run from
+> it, or learn from it.”* — Rafiki, *The Lion King* — the project's
+> patron baboon.
 
 ### Figure 2 — live Tier-1 verification against published sgRNAs
 
 ![Figure 2 — Published sgRNA recapitulation](figures/fig2_verification.png)
 
-For two independently published *Ovis aries* CRISPR experiments, the pipeline
-is run against live Ensembl release 115 and every candidate sgRNA is scored.
-The dashed line marks the paper's own published protospacer. **Panel A.**
-Crispo et al. 2015 (PLOS ONE, myostatin knockout sheep, DOI
-10.1371/journal.pone.0136690) — the published sgRNA `GGCTGTGTAATGCATGCTTG`
-is recovered at rank 7 / 103 candidates. **Panel B.** Vilarino et al. 2017
-(Scientific Reports, PDX1 knockout sheep, DOI 10.1038/s41598-017-17805-0) —
-the published single-sgRNA `GGGCCCCGCTGGAACGCGCA` is located at chromosome
-10:32,402,477 on ARS-UI_Ramb_v2.0 with a non-trivial on-target score. It
-does not reach the top-20 under our transparent heuristic scorer because
-its 80 % GC content is outside the plateau of lower-GC neighbours; this is
-an honest scorer limitation, not a correctness failure — the guide is
-*present* in the output with the correct genomic coordinates.
+For two independently published *Ovis aries* CRISPR experiments, the
+pipeline runs against live Ensembl release 115 and scores every candidate.
+The dashed line marks each paper's protospacer.
+**Panel A.** Crispo et al. 2015 (PLOS ONE, myostatin-KO sheep) — the
+published sgRNA `GGCTGTGTAATGCATGCTTG` is recovered at **rank 7 of 103**.
+**Panel B.** Vilarino et al. 2017 (Scientific Reports, PDX1-KO sheep) — the
+published single-sgRNA `GGGCCCCGCTGGAACGCGCA` is located at chromosome
+10:32,402,477 on ARS-UI_Ramb_v2.0 with a non-trivial on-target score.
+It does not reach the top-20 under our transparent heuristic scorer
+(80 % GC outside the plateau) — that is an honest scorer limitation,
+not a correctness failure: the guide is present with correct coordinates.
 
 ### Figure 3 — niche-sgRNA landscape across organs
 
 ![Figure 3 — Cross-organ niche landscape](figures/fig3_cross_organ.png)
 
-For every curated (organ, niche gene) pair, the pipeline reports how many
-SpCas9 candidate sgRNAs can be designed in the first three coding exons of
-the sheep ortholog. Colour encodes mean top-10 on-target score; cell text
-shows the raw candidate count. The kidney route via SIX1 produces **~8×**
-more candidate sgRNAs than the liver route via HHEX (1241 vs 148),
-quantifying what was previously a qualitative preference.
+For every (organ, niche gene) pair, the pipeline reports how many SpCas9
+candidates can be designed in the first three coding exons of the sheep
+ortholog. Colour = mean top-10 on-target score; text = raw candidate count.
+**The kidney route via SIX1 yields ~8× more sgRNAs than the liver route
+via HHEX (1241 vs 148).** If you are choosing an organ to start with,
+this plot has an opinion.
 
 ---
 
 ## What has been verified against published data
 
-As of the last pipeline run on this tree, three concrete checks pass:
-
 | Check | Source of truth | Result |
 | --- | --- | --- |
-| Crispo 2015 MSTN sheep sgRNA | PLOS ONE, DOI 10.1371/journal.pone.0136690 | Protospacer `GGCTGTGTAATGCATGCTTG` + PAM `TGG` found at genomic chr2:118,144,552 (Ovis aries Texel assembly via fallback), rank **3/50** in pipeline output. |
-| Vilarino 2017 PDX1 single-sgRNA | Scientific Reports, DOI 10.1038/s41598-017-17805-0 (Supp. Table S2) | Protospacer `GGGCCCCGCTGGAACGCGCA` + PAM `GGG` located at chr10:32,402,477 on ARS-UI_Ramb_v2.0; present in pipeline output with on-target score ≥ 0.5. |
-| CMAH edit drop for sheep→baboon vs pig→baboon | Estrada 2015 Xenotransplantation | `test_cmah_delta_is_preserved` asserts CMAH is `NOT_REQUIRED` on the sheep-axis, and the aggregate report shows **7 pig REQUIRED edits → 4 sheep REQUIRED edits, 1 edit dropped**. |
-| Phylogenetic identity ordering | Ensembl Compara orthologues | For FOXN1 the homology endpoint returns human-baboon identity > sheep-baboon identity, as expected; test `test_phylogeny.py::…[FOXN1]` passes. |
+| Crispo 2015 MSTN sheep sgRNA | PLOS ONE, DOI 10.1371/journal.pone.0136690 | Protospacer `GGCTGTGTAATGCATGCTTG` + PAM `TGG` found at chr2:118,144,552 (Texel assembly via fallback), **rank 7/103** |
+| Vilarino 2017 PDX1 single sgRNA | *Scientific Reports*, DOI 10.1038/s41598-017-17805-0 (Supp. Table S2) | Protospacer `GGGCCCCGCTGGAACGCGCA` + PAM `GGG` at chr10:32,402,477 on ARS-UI_Ramb_v2.0; present with on-target score ≥ 0.5 |
+| CMAH edit drop (sheep → baboon vs pig → baboon) | Estrada 2015 *Xenotransplantation* | `test_cmah_delta_is_preserved` ✅ — 7 pig-REQUIRED edits reduce to 4 on the sheep axis |
+| Phylogenetic identity ordering | Ensembl Compara orthologues | FOXN1 human-baboon > sheep-baboon identity as expected ✅ |
 
-41 unit tests + 2 Tier-1 live Ensembl verifications pass; 3 phylogeny checks
-are skipped where Ensembl's condensed homology payload omits `perc_id`.
+**45 passing tests**, including 2 live Ensembl Tier-1 checks and 4
+real-data case studies. 3 phylogeny cases skip where Ensembl's condensed
+homology payload omits `perc_id`.
 
 Three full organ reports are generated end-to-end from live public data:
 
 ```
-reports/pancreas.md   9.2 KB   PDX1 niche + TP53/BAK1/MYD88 competence + CMAH-dropped xeno
-reports/kidney.md     10  KB   SALL1+SIX1 niche (Wang 2023 strategy)
-reports/thymus.md     9.1 KB   FOXN1 niche (Nehls 1994 rationale)
+reports/pancreas.md   ~9.2 KB   PDX1 niche + TP53/BAK1/MYD88 competence + CMAH-dropped xeno
+reports/kidney.md     ~10  KB   SALL1 + SIX1 niche (Wang 2023 Cell Stem Cell strategy)
+reports/thymus.md     ~9.1 KB   FOXN1 niche (Nehls 1994 "nude" phenotype rationale)
 ```
+
+---
 
 ## Case studies you can run right now
 
-Each case below is a concrete question a researcher might bring to the
-pipeline. Every command is verified by the tests in
-`tests/test_real_case_studies.py` (all passing at the time of writing).
+> *“Are we not men?”* — the beast-folk, H. G. Wells, *The Island of
+> Doctor Moreau*, 1896. Nobody said this field was young.
 
 ### Case 1 — "Which sheep assembly even has my gene?"
 
 Sheep MSTN on the Rambouillet reference (`ovis_aries`) is annotated as a
 single-exon *lncRNA*; the protein-coding MSTN transcript only exists on
-the Texel reference (`ovis_aries_texel`). The pipeline detects the gap and
-falls back transparently:
+the Texel reference. The pipeline detects the gap and falls back:
 
-```
+```python
 >>> from papovis.ensembl import EnsemblClient
 >>> client = EnsemblClient()
 >>> client.lookup_gene_by_symbol("Ovis aries", "MSTN")["_papovis_resolved_species"]
@@ -210,13 +217,13 @@ falls back transparently:
 'ovis_aries'
 ```
 
-### Case 2 — "Is my baboon gene at a plausible genomic address?"
+### Case 2 — "Is my baboon gene even at a plausible genomic address?"
 
-Baboon TP53 must live on chromosome 17 in any primate. The pipeline fetches
-Papio anubis Panubis1.0 coordinates and returns sgRNAs all on chromosome 17,
-within a 100 kb window — confirming the correct gene was resolved:
+Baboon TP53 must live on chromosome 17 in any primate. The pipeline returns
+sgRNAs only on chr17 in a 100 kb window — confirmation that the right gene
+was resolved:
 
-```
+```python
 >>> from papovis.design import design_guides_for_gene
 >>> guides = design_guides_for_gene(gene_symbol="TP53", species="Papio anubis", guides_per_gene=10)
 >>> {g.chromosome for g in guides}
@@ -229,7 +236,7 @@ Wang et al. (*Cell Stem Cell* 2023) generated humanised mesonephros in
 *SIX1/SALL1* double-knockout pigs. Our pipeline encodes the same strategy
 for a sheep host and emits sgRNAs for both genes in a single plan:
 
-```
+```python
 >>> from papovis.niche import design_niche_edits
 >>> plan = design_niche_edits(organ="kidney", host_species="Ovis aries", guides_per_gene=5)
 >>> plan.target_genes
@@ -238,11 +245,10 @@ for a sheep host and emits sgRNAs for both genes in a single plan:
 
 ### Case 4 — "Does the CMAH discount still hold after editing the catalog?"
 
-The central thesis of this project is a computed, testable claim. If the
-catalog is edited in a way that erases the sheep-donor advantage, CI
-fails loudly:
+The central thesis is a computed, testable claim. If the catalog is ever
+edited in a way that erases the sheep-donor advantage, CI fails loudly:
 
-```
+```bash
 $ pytest tests/test_xeno_delta.py::test_aggregate_delta_is_positive -v
 PASSED  (Δ ≥ 1: sheep axis currently drops CMAH relative to pig axis)
 ```
@@ -265,22 +271,107 @@ pip install -e ".[dev]"
 ## Quickstart
 
 ```bash
-# Run the MVP pipeline on the PDX1 (pancreas niche) target in sheep
-papovis stage1-niche --organ pancreas --host sheep --output reports/pancreas.md
-
-# Run Tier 1 verification against the Vilarino 2017 published sgRNAs
-pytest -m golden -v
+papovis organs                                         # list curated organs
+papovis plan --organ pancreas --output reports/pancreas.md
+papovis verify --gene MSTN --species "Ovis aries"     # Tier-1 check
+python scripts/generate_figures.py                     # regenerate the three figures
+pytest                                                 # 45 tests in ~10 s
 ```
 
-## Scientific disclaimers
+---
 
-This repository is a **computational design tool**. No wet-lab experiments are
-performed or encouraged by this codebase. Publications cited are the authority; the
-pipeline aims only to make their reasoning explicit, reproducible, and extensible.
+## Project layout
 
-Interspecies chimera research is subject to evolving ethical oversight. Consult the
-ISSCR 2021 guidelines and national authorities before any wet-lab translation.
+```
+baaboon/
+├── papovis/              # Python package (short names, pydantic-typed)
+│   ├── ensembl.py        # live REST client + Rambouillet↔Texel fallback
+│   ├── grna.py           # overlap-aware PAM scanner + heuristic scorer
+│   ├── design.py         # catalog-free per-gene designer
+│   ├── niche.py          # Stage 1a: sheep niche vacancy
+│   ├── competence.py     # Stage 1b: baboon iPSC barrier edits
+│   ├── xeno.py           # Stage 2: sheep→baboon minimum edit set
+│   ├── report.py         # markdown report builder
+│   ├── golden.py         # Tier-1 verification harness
+│   ├── figures.py        # publication figures (matplotlib)
+│   └── cli.py            # typer CLI
+├── data/                 # curated YAML (niche, barrier, xeno, golden)
+├── notebooks/            # one runnable demo per organ
+├── scripts/generate_figures.py
+├── tests/                # 45 tests; live Ensembl marked `network`
+├── figures/              # PDF + 300-dpi PNG
+├── assets/               # SVG art for README
+└── docs/verification.md  # three-tier verification strategy
+```
+
+---
+
+## Frequently Asked Nervous Questions
+
+**Is this legal?** — Reading about it, yes. Doing it in a wet lab requires
+the same ethics review any chimera / xenograft experiment requires (ISSCR
+2021, your national authority, and a long conversation with your IRB).
+
+**Does this actually create a sheep–baboon chimera?** — No. This repository
+is a **computational design tool**. Nothing here injects, edits, or grows
+a single cell.
+
+**Why not use CRISPOR / CHOPCHOP / Benchling?** — Use them in addition, not
+instead. Those tools are production-grade for generic sgRNA design. This
+project's contribution is different: it is the first open, end-to-end
+*two-stage* design pipeline specific to the baboon×sheep pair, with the
+published-sgRNA recapitulation harness and the pig-vs-sheep delta
+computation baked into CI.
+
+**The Vilarino sgRNA isn't in your top-20. Isn't that a bug?** — No. That
+guide was designed by the MIT CRISPR design tool and happens to sit at
+80 % GC, outside our scorer's plateau. Our transparent heuristic and
+MIT's model disagree on rank; they agree on the guide being correct.
+Reproducing someone else's *ranking* was not the goal — reproducing the
+guide at the right coordinate was, and that passes.
+
+**What if Ensembl drops the Texel reference?** — Then the MSTN live test
+fails, the CI turns red, and whoever is on call wakes up. That is the
+entire point of the three-tier verification: real-world reference drift
+surfaces quickly rather than silently rotting the output.
+
+---
 
 ## License
 
-MIT. See `LICENSE`.
+MIT. See [`LICENSE`](LICENSE).
+
+Released under MIT because science should travel. Please do not create
+actual sheep–baboon chimeras without ethics approval. Please do not
+actually knock out your own CMAH. Please do not name your lab sheep
+"Dolly II".
+
+## Acknowledgements
+
+This repository stands on the shoulders of a weirdly specific set of
+giants:
+
+- **Ian Wilmut & the Roslin Institute** — 1996, Dolly, the first cloned
+  mammal, a sheep. The whole field's foundation stone.
+- **Marcela Vilarino, Pablo J. Ross & co-authors** — 2017, sheep PDX1
+  knockout in *Scientific Reports*. Without this paper, the blastocyst-
+  complementation path for sheep would still be hypothetical.
+- **H. Nakauchi, T. Yamaguchi and collaborators** — two decades of rat-
+  and pig-host complementation work.
+- **Jun Wu, Izpisua Belmonte lab and 2021–2024 collaborators** — ex vivo
+  human-monkey chimeric embryos.
+- **Lin et al. 2024, *Cell Stem Cell*** — cell-adhesion barrier work that
+  keeps the project honest about what edits `competence.py` actually
+  needs to cover.
+- **Estrada et al. 2015 *Xenotransplantation*** — the CMAH observation
+  that this repository is quietly built around.
+- **Philip K. Dick** for the title, **H. G. Wells** for the ethics
+  homework, and **Rafiki** for the vibe.
+
+---
+
+<p align="center"><sub>
+  Built with live public data and somebody else's prior art.<br/>
+  If this repo helps your work, consider citing the primary papers above
+  before citing this repository.
+</sub></p>
