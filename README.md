@@ -4,11 +4,11 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1f2933" alt="MIT License"/></a>
-  <img src="https://img.shields.io/badge/python-3.11%2B-0072B2" alt="Python 3.11+"/>
-  <img src="https://img.shields.io/badge/tests-45%20passing-009E73" alt="45 tests passing"/>
-  <img src="https://img.shields.io/badge/ensembl-release%20115-E69F00" alt="Ensembl release 115"/>
-  <img src="https://img.shields.io/badge/sgRNAs%20reproduced-Crispo%202015%20%7C%20Vilarino%202017-D55E00" alt="Published sgRNAs reproduced"/>
-  <img src="https://img.shields.io/badge/CMAH%20%CE%94-1%20edit%20dropped-CC79A7" alt="CMAH delta"/>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-3.11%2B-0072B2" alt="Python 3.11+"/></a>
+  <a href="tests/"><img src="https://img.shields.io/badge/tests-48%20passing-009E73" alt="48 tests passing"/></a>
+  <a href="https://rest.ensembl.org/"><img src="https://img.shields.io/badge/ensembl-release%20115-E69F00" alt="Ensembl release 115"/></a>
+  <a href="docs/verification.md"><img src="https://img.shields.io/badge/sgRNAs%20reproduced-Crispo%202015%20%7C%20Vilarino%202017-D55E00" alt="Published sgRNAs reproduced"/></a>
+  <a href="tests/test_xeno_delta.py"><img src="https://img.shields.io/badge/CMAH%20%CE%94-1%20edit%20dropped-CC79A7" alt="CMAH delta"/></a>
 </p>
 
 <p align="center"><em>
@@ -213,7 +213,7 @@ this plot has an opinion.
 | CMAH edit drop (sheep → baboon vs pig → baboon) | Estrada 2015 *Xenotransplantation* | `test_cmah_delta_is_preserved` ✅ — 7 pig-REQUIRED edits reduce to 4 on the sheep axis |
 | Phylogenetic identity ordering | Ensembl Compara orthologues | FOXN1 human-baboon > sheep-baboon identity as expected ✅ |
 
-**45 passing tests**, including 2 live Ensembl Tier-1 checks and 4
+**48 passing tests**, including 2 live Ensembl Tier-1 checks and 4
 real-data case studies. 3 phylogeny cases skip where Ensembl's condensed
 homology payload omits `perc_id`.
 
@@ -313,7 +313,7 @@ papovis organs                                         # list curated organs
 papovis plan --organ pancreas --output reports/pancreas.md
 papovis verify --gene MSTN --species "Ovis aries"     # Tier-1 check
 python scripts/generate_figures.py                     # regenerate the three figures
-pytest                                                 # 45 tests in ~10 s
+pytest                                                 # 48 tests in ~10 s
 ```
 
 ---
@@ -336,7 +336,7 @@ baaboon/
 ├── data/                 # curated YAML (niche, barrier, xeno, golden)
 ├── notebooks/            # one runnable demo per organ
 ├── scripts/generate_figures.py
-├── tests/                # 45 tests; live Ensembl marked `network`
+├── tests/                # 48 tests; live Ensembl marked `network`
 ├── figures/              # PDF + 300-dpi PNG
 ├── assets/               # SVG art for README
 └── docs/verification.md  # three-tier verification strategy
