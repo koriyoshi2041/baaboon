@@ -217,6 +217,8 @@ the Texel reference. The pipeline detects the gap and falls back:
 'ovis_aries'
 ```
 
+![Case 1 — Assembly fallback](figures/case1_assembly_fallback.png)
+
 ### Case 2 — "Is my baboon gene even at a plausible genomic address?"
 
 Baboon TP53 must live on chromosome 17 in any primate. The pipeline returns
@@ -229,6 +231,8 @@ was resolved:
 >>> {g.chromosome for g in guides}
 {'17'}
 ```
+
+![Case 2 — Baboon TP53 locus](figures/case2_tp53_locus.png)
 
 ### Case 3 — "What does the Wang 2023 kidney strategy look like in sheep?"
 
@@ -243,6 +247,8 @@ for a sheep host and emits sgRNAs for both genes in a single plan:
 ('SALL1', 'SIX1')
 ```
 
+![Case 3 — Wang 2023 kidney strategy translated to sheep](figures/case3_kidney_dual_ko.png)
+
 ### Case 4 — "Does the CMAH discount still hold after editing the catalog?"
 
 The central thesis is a computed, testable claim. If the catalog is ever
@@ -252,6 +258,8 @@ edited in a way that erases the sheep-donor advantage, CI fails loudly:
 $ pytest tests/test_xeno_delta.py::test_aggregate_delta_is_positive -v
 PASSED  (Δ ≥ 1: sheep axis currently drops CMAH relative to pig axis)
 ```
+
+![Case 4 — CMAH audit](figures/case4_cmah_audit.png)
 
 ---
 
