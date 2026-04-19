@@ -1,55 +1,57 @@
 <svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minimal hand-drawn baboon, side profile sitting">
-  <!-- Sitting body (olive baboon silhouette) -->
+  <!-- Sitting body: larger rounded trunk -->
   <g stroke="#1f2933" stroke-width="2.2" stroke-linejoin="round" fill="#fafafa">
-    <path d="M90 160
-             q-14 0 -14 -18
-             q-2 -22 10 -38
-             q14 -16 36 -16
-             q26 0 38 18
-             q8 14 2 28
-             q-4 12 -14 14
-             q-8 14 -26 14
-             l-32 -2z"/>
+    <path d="M70 160
+             q-10 0 -10 -20
+             q-4 -34 18 -56
+             q24 -22 60 -18
+             q30 4 36 32
+             q4 22 -16 30
+             q-4 24 -38 30
+             l-50 2z"/>
   </g>
 
-  <!-- Prominent muzzle + head -->
+  <!-- Head: dog-like elongated muzzle-forward skull -->
   <g stroke="#1f2933" stroke-width="2.2" stroke-linejoin="round" fill="#fafafa">
-    <!-- Muzzle (forward-projecting, key baboon feature) -->
-    <path d="M30 92
-             q-6 -14 4 -22
-             q14 -10 40 -6
-             q18 4 22 22
-             q-2 14 -16 18
-             q-20 6 -38 -2
-             q-12 -4 -12 -10z"/>
-    <!-- Skull cap / mane -->
-    <path d="M58 70
-             q-2 -22 22 -28
-             q26 -6 40 10
-             q8 10 2 20
-             q-10 10 -28 12
-             q-22 0 -36 -14z"/>
+    <!-- Cranium -->
+    <ellipse cx="110" cy="60" rx="28" ry="22"/>
+    <!-- Muzzle protruding forward-left -->
+    <path d="M84 66
+             q-20 -4 -30 6
+             q-6 8 0 16
+             q8 8 22 8
+             q16 2 24 -8
+             q4 -8 -2 -14
+             q-6 -6 -14 -8z"/>
   </g>
-
-  <!-- Ear -->
-  <path d="M98 60 q8 -2 10 6 q0 8 -8 8 q-4 -4 -2 -14z"
-        fill="#fafafa" stroke="#1f2933" stroke-width="2"/>
 
   <!-- Brow ridge -->
-  <path d="M56 74 q16 -6 34 -2" stroke="#1f2933" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M92 54 q16 -10 32 -6"
+        stroke="#1f2933" stroke-width="2" fill="none" stroke-linecap="round"/>
   <!-- Eye -->
-  <circle cx="64" cy="82" r="2" fill="#1f2933"/>
-  <!-- Nostril -->
-  <circle cx="26" cy="88" r="1.2" fill="#1f2933"/>
+  <circle cx="98" cy="60" r="2.4" fill="#1f2933"/>
+  <!-- Nostril dot -->
+  <circle cx="58" cy="78" r="1.5" fill="#1f2933"/>
   <!-- Mouth line -->
-  <path d="M24 100 q14 4 32 0" stroke="#1f2933" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M56 90 q16 4 28 0"
+        stroke="#1f2933" stroke-width="1.5" fill="none" stroke-linecap="round"/>
 
-  <!-- Sitting arm -->
-  <path d="M110 130 q12 -4 24 2 q8 6 6 16"
+  <!-- Ear (rounded tab on skull) -->
+  <path d="M132 48 q10 -2 10 8 q0 10 -10 8z"
+        fill="#fafafa" stroke="#1f2933" stroke-width="2"/>
+
+  <!-- Front arm reaching down/forward -->
+  <path d="M100 118 q-6 14 -14 22 q-4 10 2 18"
+        stroke="#1f2933" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <!-- Hand hint -->
+  <circle cx="88" cy="158" r="4" fill="#fafafa" stroke="#1f2933" stroke-width="2"/>
+
+  <!-- Folded leg -->
+  <path d="M140 148 q20 0 30 -12"
         stroke="#1f2933" stroke-width="2.4" fill="none" stroke-linecap="round"/>
 
-  <!-- Tail curving up and over -->
-  <path d="M174 150 q26 -6 32 -40 q2 -16 -8 -22"
+  <!-- Tail curving up high -->
+  <path d="M172 134 q38 -6 46 -50 q2 -18 -10 -22"
         stroke="#1f2933" stroke-width="2.4" fill="none" stroke-linecap="round"/>
 
   <!-- Species label -->
