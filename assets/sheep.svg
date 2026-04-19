@@ -1,0 +1,44 @@
+<svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minimal hand-drawn sheep, side view">
+  <!-- Fluffy cloud body made of overlapping bumps -->
+  <g stroke="#1f2933" stroke-width="2.2" stroke-linejoin="round" fill="#fafafa">
+    <path d="M60 110
+             c-6 -18 14 -30 28 -22
+             c2 -16 24 -22 38 -10
+             c8 -14 32 -12 40 4
+             c18 -4 34 10 30 26
+             c14 6 10 28 -6 30
+             l-108 0
+             c-18 0 -24 -16 -22 -28z"/>
+    <!-- Puffy shoulder tufts -->
+    <circle cx="190" cy="118" r="10"/>
+    <circle cx="70" cy="122" r="9"/>
+  </g>
+
+  <!-- Head (dark face, characteristic of many sheep breeds) -->
+  <g fill="#1f2933" stroke="#1f2933" stroke-width="1.5" stroke-linejoin="round">
+    <ellipse cx="48" cy="110" rx="16" ry="13"/>
+    <!-- Ears as drop-shapes -->
+    <path d="M38 95 q-6 -4 -2 -10 q6 2 4 10z"/>
+    <path d="M58 96 q8 -6 4 -12 q-8 2 -4 12z"/>
+  </g>
+  <!-- Eye (white dot on dark face) -->
+  <circle cx="43" cy="110" r="1.8" fill="#fafafa"/>
+  <!-- Muzzle highlight -->
+  <path d="M34 115 q-4 2 -2 5" stroke="#fafafa" stroke-width="1" fill="none" stroke-linecap="round"/>
+
+  <!-- Legs -->
+  <g stroke="#1f2933" stroke-width="3.2" stroke-linecap="round">
+    <line x1="88" y1="140" x2="88" y2="168"/>
+    <line x1="110" y1="144" x2="110" y2="168"/>
+    <line x1="158" y1="144" x2="158" y2="168"/>
+    <line x1="184" y1="140" x2="184" y2="168"/>
+  </g>
+
+  <!-- Tail -->
+  <circle cx="206" cy="112" r="4" fill="#fafafa" stroke="#1f2933" stroke-width="2"/>
+
+  <!-- Species label -->
+  <text x="130" y="176"
+        font-family="ui-monospace, 'DejaVu Sans Mono', monospace"
+        font-size="9" text-anchor="middle" fill="#1f2933" font-style="italic">Ovis aries</text>
+</svg>

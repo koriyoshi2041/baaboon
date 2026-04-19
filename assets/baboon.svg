@@ -1,0 +1,59 @@
+<svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minimal hand-drawn baboon, side profile sitting">
+  <!-- Sitting body (olive baboon silhouette) -->
+  <g stroke="#1f2933" stroke-width="2.2" stroke-linejoin="round" fill="#fafafa">
+    <path d="M90 160
+             q-14 0 -14 -18
+             q-2 -22 10 -38
+             q14 -16 36 -16
+             q26 0 38 18
+             q8 14 2 28
+             q-4 12 -14 14
+             q-8 14 -26 14
+             l-32 -2z"/>
+  </g>
+
+  <!-- Prominent muzzle + head -->
+  <g stroke="#1f2933" stroke-width="2.2" stroke-linejoin="round" fill="#fafafa">
+    <!-- Muzzle (forward-projecting, key baboon feature) -->
+    <path d="M30 92
+             q-6 -14 4 -22
+             q14 -10 40 -6
+             q18 4 22 22
+             q-2 14 -16 18
+             q-20 6 -38 -2
+             q-12 -4 -12 -10z"/>
+    <!-- Skull cap / mane -->
+    <path d="M58 70
+             q-2 -22 22 -28
+             q26 -6 40 10
+             q8 10 2 20
+             q-10 10 -28 12
+             q-22 0 -36 -14z"/>
+  </g>
+
+  <!-- Ear -->
+  <path d="M98 60 q8 -2 10 6 q0 8 -8 8 q-4 -4 -2 -14z"
+        fill="#fafafa" stroke="#1f2933" stroke-width="2"/>
+
+  <!-- Brow ridge -->
+  <path d="M56 74 q16 -6 34 -2" stroke="#1f2933" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Eye -->
+  <circle cx="64" cy="82" r="2" fill="#1f2933"/>
+  <!-- Nostril -->
+  <circle cx="26" cy="88" r="1.2" fill="#1f2933"/>
+  <!-- Mouth line -->
+  <path d="M24 100 q14 4 32 0" stroke="#1f2933" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Sitting arm -->
+  <path d="M110 130 q12 -4 24 2 q8 6 6 16"
+        stroke="#1f2933" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+
+  <!-- Tail curving up and over -->
+  <path d="M174 150 q26 -6 32 -40 q2 -16 -8 -22"
+        stroke="#1f2933" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+
+  <!-- Species label -->
+  <text x="130" y="176"
+        font-family="ui-monospace, 'DejaVu Sans Mono', monospace"
+        font-size="9" text-anchor="middle" fill="#1f2933" font-style="italic">Papio anubis</text>
+</svg>
