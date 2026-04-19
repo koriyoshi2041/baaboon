@@ -123,6 +123,36 @@ The pairing is motivated. It is not a stunt.
 
 ---
 
+## Why these animals, *actually*? (the real story)
+
+The CMAH argument above is retrofit. The honest origin is much dumber,
+and since the repository is MIT-licensed there is no point hiding it.
+
+- 🐑 **Why sheep?** The author's WeChat avatar is a cartoon sheep with
+  **five legs and three horns**. At some point it became clear that a
+  repository about editing a sheep's genome was narratively inevitable.
+  The CMAH rationale arrived later; the five-legged sheep came first.
+  *(If you are wondering whether the extra leg and horn show up anywhere
+  in the code — no. Both `data/niche_genes.yaml` and the anatomy
+  literature still assume Ovis aries is tetrapod and dihorn. We know
+  our place.)*
+
+- 🐒 **Why baboon?** Because the author, in karaoke, occasionally belts
+  out *"if I am a baaboon ~ 🎤"* — the elongated middle-`a` is
+  load-bearing and also the reason this repository is called `baaboon`,
+  not `baboon`. *Papio anubis* was picked because (a) its genome is on
+  Ensembl, (b) the 2025 pig-to-baboon xenograft literature makes the
+  recipient well-characterised, and (c) the syllable count matches.
+
+> *"S'il te plaît... dessine-moi un mouton."* — Antoine de Saint-Exupéry,
+> *Le Petit Prince*, 1943. It took a few decades, but now there is a
+> CLI for that. `papovis plan --organ pancreas` draws the sheep.
+
+> *"There is no gene for fate."* — *Gattaca*, 1997. There is, however,
+> a YAML file. See [`data/niche_genes.yaml`](data/niche_genes.yaml).
+
+---
+
 ## Headline figures
 
 All three figures below are produced by `python scripts/generate_figures.py`
